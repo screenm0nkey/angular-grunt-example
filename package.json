@@ -1,6 +1,6 @@
 {
-  "name": "angular-app-server",
-  "description": "Back end server to support our angular app",
+  "name": " angular-grunt-example",
+  "description": "Test app to reduces requests to one file with angulars $templateCache",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
