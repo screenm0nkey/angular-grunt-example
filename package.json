@@ -1,5 +1,5 @@
 {
-  "name": " angular-grunt-example",
+  "name": "angular-grunt-example",
   "description": "Test app to reduces requests to one file with angulars $templateCache",
   "version": "0.0.1",
   "private": true,
