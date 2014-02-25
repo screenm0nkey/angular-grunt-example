@@ -19,7 +19,15 @@ module.exports = function(grunt) {
         files: [
           '<%= jshint.files %>'
         ],
-        tasks: ['timestamp','jshint', 'ngtemplates', 'concat', 'uglify', 'clean'],
+        tasks: [
+          'timestamp',
+          'jshint',
+          'ngmin:zoltar',
+          'ngtemplates',
+          'concat',
+          'uglify',
+          'clean'
+        ],
         options: {
           spawn: false
         }
@@ -27,7 +35,7 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      files: ['GruntFile.js', '<%=paths.js%>*.js'],
+      files: ['GruntFile.js', '<%=paths.js%>**/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -52,10 +60,14 @@ module.exports = function(grunt) {
         src: [
           '<%=paths.lib%>angular.js',
           '<%=paths.lib%>angular-route.js',
-          '<%=paths.js%>app.js',
-          // ngtemplates uses angular's $template cache
+          'dist/ngmin/app.js',
+          // ngtemplates uses angular's $template cache. it has to go here after
+          // the app.js but before the rest of the app's files. look at the
+          // concat file to see why, but it it adds
           '<%= ngtemplates.app.dest %>',
-          '<%=paths.js%>**/*.js'],
+          'dist/ngmin/directives/**/*.js',
+          'dist/ngmin/services/**/*.js'
+        ],
         dest: 'dist/concat.js'
       }
     },
@@ -63,8 +75,8 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         // stop angualr from breaking even though i thought the arrays in
-        // angular were supposed to dp that.
-        mangle: false
+        // angular were supposed to do that.
+        mangle: true
       },
       my_target: {
         files: {
@@ -80,6 +92,16 @@ module.exports = function(grunt) {
       }
     },
 
+    // call this like 'grunt ngmin:zoltar'
+    ngmin: {
+      zoltar: {
+        cwd: 'app/js',
+        expand: true,
+        src: ['**/*.js'],
+        dest: 'dist/ngmin'
+      }
+    },
+
     clean: ["dist"]
   });
 
@@ -89,6 +111,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-ngmin');
   // Default task.
   grunt.registerTask('default', ['jshint']);
 

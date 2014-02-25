@@ -6,7 +6,7 @@
 
   var app = angular.module('app', ['ngRoute']);
 
-  app.config(['$routeProvider', function($routeProvider) {
+  app.config(function($routeProvider) {
     $routeProvider.when('/home', {
       // this path has to have app at the start to match the $templatecache
       templateUrl: 'app/partials/main.html',
@@ -14,11 +14,11 @@
     });
 
     $routeProvider.otherwise({redirectTo: '/home'});
-  }]);
+  });
 
 
-  app.controller('MainCtrl', ['$scope', function($scope) {
+  app.controller('MainCtrl',function($scope) {
 
-  }]);
+  });
 
 }(window.angular));

@@ -6,7 +6,7 @@
 
   var app = angular.module('app');
 
-  app.directive('dirone', function () {
+  app.directive('dirone', function (TestSvc) {
     return {
       restrict : 'E',
       replace : true,
@@ -21,7 +21,8 @@
     };
   });
 
-  app.directive('dirtwo', function () {
+
+  app.directive('dirtwo', function (TestSvc) {
     return {
       restrict : 'E',
       replace : true,
